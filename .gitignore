@@ -17,6 +17,7 @@ runs/*
 !runs/.gitkeep
 checkpoints/*
 !checkpoints/.gitkeep
+*.pt
 *.onnx
 *.engine
 
