@@ -28,6 +28,8 @@ assets/demo/*.png
 assets/demo/*.mp4
 assets/demo/*.avi
 !assets/demo/.gitkeep
+data/raw/VisDrone/
+data/interim/visdrone_detection_runtime.yaml
 
 # Logs
 *.log

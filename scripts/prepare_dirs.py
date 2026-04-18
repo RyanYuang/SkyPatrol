@@ -16,6 +16,7 @@ DIRECTORIES = [
     "src/pipeline",
     "src/utils",
     "src/schemas",
+    "src/training",
     "tests",
     "docs",
 ]

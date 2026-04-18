@@ -1,8 +1,10 @@
-# UAV Vision MVP0
+# UAV Vision MVP0 / MVP1
 
-基于 YOLO 的无人机视觉项目 MVP0 脚手架。
+基于 YOLO 的无人机视觉项目脚手架。
 
-当前目标：先跑通识别功能（目标检测），支持图片、视频和本地摄像头输入，并输出带框结果与 predictions.json。
+当前状态：
+- MVP0 已跑通本地识别功能（目标检测）
+- MVP1 已接入 VisDrone 训练入口，可开始无人机视角检测训练
 
 ## 1. 功能范围
 
@@ -13,9 +15,13 @@ MVP0 已包含：
 - JSON 结果导出
 - 最小测试与脚手架文档
 
-MVP0 暂不包含：
+MVP1 已新增：
+- VisDrone2019-DET 数据集自动准备入口
+- 无人机视角检测训练脚本
+- VisDrone 训练配置与文档
+
+当前暂不包含：
 - 语义分割
-- 自定义训练
 - Jetson / TensorRT 部署
 - 无人机实机视频流接入
 
@@ -88,17 +94,42 @@ runs/detect/<timestamp>/
 
 ## 7. 关键配置
 
-模型配置：`configs/model/yolo_detect.yaml`
+检测推理模型配置：`configs/model/yolo_detect.yaml`
+VisDrone 训练配置：`configs/model/yolo_visdrone_train.yaml`
 运行配置：`configs/runtime/infer.yaml`
 类别名映射：`configs/data/class_names.yaml`
 
-## 8. 测试
+## 8. VisDrone 训练入口
+
+仅下载并准备数据集：
+```bash
+source .venv/bin/activate
+python scripts/train_visdrone.py --download-only
+```
+
+开始训练（Apple Silicon 可先试 mps）：
+```bash
+source .venv/bin/activate
+python scripts/train_visdrone.py --device mps --epochs 50 --batch 8
+```
+
+如果只想快速验证训练链路，可先缩小参数：
+```bash
+python scripts/train_visdrone.py --device cpu --epochs 1 --imgsz 640 --batch 2
+```
+
+注意：
+- 首次下载 VisDrone 大约需要 2.3 GB 空间
+- 数据默认落在 `data/raw/VisDrone`
+- 运行时会自动生成 `data/interim/visdrone_detection_runtime.yaml`
+
+## 9. 测试
 
 ```bash
 pytest -q
 ```
 
-## 9. 常见问题
+## 10. 常见问题
 
 1. 首次运行会自动下载 YOLO 权重
 - 需要联网
@@ -111,7 +142,11 @@ pytest -q
 3. 摄像头打不开
 - 尝试 `--source 1` 或 `--source 2`
 
-## 10. 下一步路线
+4. VisDrone 下载慢或失败
+- 可稍后重试 `python scripts/train_visdrone.py --download-only`
+- 也可以手动下载后放到 `data/raw/VisDrone`
+
+## 11. 下一步路线
 
 - MVP1：接入 VisDrone，自定义检测训练
 - MVP2：增加语义分割模块
