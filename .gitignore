@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Build / runtime
+runs/*
+!runs/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+*.onnx
+*.engine
+
+# Data
+assets/demo/*.jpg
+assets/demo/*.jpeg
+assets/demo/*.png
+assets/demo/*.mp4
+assets/demo/*.avi
+!assets/demo/.gitkeep
+
+# Logs
+*.log

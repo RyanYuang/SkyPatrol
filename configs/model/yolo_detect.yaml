@@ -1,0 +1,7 @@
+model_name: yolov8n.pt
+imgsz: 640
+conf: 0.25
+iou: 0.45
+device: cpu
+classes: null
+verbose: false
